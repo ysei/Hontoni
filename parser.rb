@@ -119,7 +119,9 @@ class Parser
         end
 
       elsif char=~/[\+\-\*\/]/
-        $top.push eval("#{$top[-2]}#{char}#{$top[-1]}")
+        x=$top[-2]
+        y=$top[-1]
+        $top.push eval("#{x}#{char}#{y}")
 
       elsif char==';'  && ( ! $settings[:escape] )
         # Exit program
