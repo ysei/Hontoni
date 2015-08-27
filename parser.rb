@@ -117,7 +117,13 @@ class Parser
         y=$top[-1]
         z=nil
 
-        # Eval allows injection here!
+        # Errors when adding Strings to Fixnums 
+        if ! ( x.is_a? Fixnum && y.is_a? Fixnum )
+          x=x.to_s
+          y=y.to_s
+        end
+
+        # eval() allows injection here!
         # $top.push eval("#{x}#{char}#{y}")
 
            if char=='+'   then z=x+y
