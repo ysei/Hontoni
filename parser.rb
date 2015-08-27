@@ -57,10 +57,7 @@ class Parser
         $settings[:convert]=true
 
       elsif $settings[:is_string]
-
-        if $settings[:escape]
-          $settings[:escape]=false
-        end
+        $settings[:escape]=false
 
         $top[-1]+=char
 
@@ -102,10 +99,7 @@ class Parser
         $settings[:assign]=true
 
       elsif $settings[:assign] && ( $top != nil )
-
-        if $settings[:escape]
-          $settings[:escape]=false
-        end
+        $settings[:escape]=false
 
         $variables[:"#{char}"]=$top
         $settings[:assign]=false
@@ -128,18 +122,14 @@ class Parser
         break
 
       elsif $variables[:"#{char}"] != nil
+        $settings[:escape]=false
 
-        if $settings[:escape]
-          $settings[:escape]=false
-        end
-
-        $top=$variables[:"#{char}"]
+        $top.push $variables[:"#{char}"]
 
       end
 
 
       # Outputting settings for debug
-
       puts "\t#{$settings}: #{$variables} {#{$top}}" if($settings[:debug])
 
       # Moving to the right
