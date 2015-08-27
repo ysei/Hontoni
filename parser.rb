@@ -37,9 +37,13 @@ class Parser
         $settings[:is_number]=false
       end
 
+
+      # Start parsing
+
       if char==0
         # Something went wrong with the file :S
 
+      ### !!! Most important functions here !!! ###
       elsif char=='\\' && ( ! $settings[:escape] )
         $settings[:escape]=true
 
@@ -53,13 +57,24 @@ class Parser
           $settings[:is_string]=true
         end
 
-      elsif char=='~' && ( ! $settings[:escape] )
-        $settings[:convert]=true
-
+      # If we're dealing with a string
       elsif $settings[:is_string]
         $settings[:escape]=false
 
         $top[-1]+=char
+
+      ### !!! Other commands below here !!! ###
+
+      # Enable conversion
+      elsif char=='~' && ( ! $settings[:escape] )
+        $settings[:convert]=true
+
+      # Check if variable
+      elsif $variables[:"#{char}"] != nil && ( ! $settings[:escape] )
+        $settings[:escape]=false
+
+        # Push variable to stack
+        $top.push $variables[:"#{char}"]
 
       elsif char=~/[0-9a-f BDH]/ && ( ! $settings[:escape] )
         if char == ' '
@@ -117,7 +132,7 @@ class Parser
         y=$top[-1]
         z=nil
 
-        # Errors when adding Strings to Fixnums 
+        # Errors when adding Strings to Fixnums
         if ! ( x.is_a? Fixnum && y.is_a? Fixnum )
           x=x.to_s
           y=y.to_s
@@ -132,20 +147,16 @@ class Parser
         elsif char=='/'   then z=x/y
           end
 
+      # Exit the program
       elsif char==';'  && ( ! $settings[:escape] )
         # Exit program
         break
 
-      elsif $variables[:"#{char}"] != nil
-        $settings[:escape]=false
-
-        $top.push $variables[:"#{char}"]
-
-      end
+      end # char == ...
 
 
       # Outputting settings for debug
-      puts "\t#{$settings}: #{$variables} {#{$top}}" if($settings[:debug])
+      puts "\t#{$variables}\t\t#{$top}\n\t#{$settings}" if($settings[:debug])
 
       # Moving to the right
       $loc[:x] += 1
@@ -157,6 +168,7 @@ class Parser
       end
 
       if $loc[:y] == $data.length
+        # We're at the end of the data
         puts "EOF" if $settings[:debug]
         break
       end
