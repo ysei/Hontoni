@@ -115,7 +115,16 @@ class Parser
       elsif char=~/[\+\-\*\/]/
         x=$top[-2]
         y=$top[-1]
-        $top.push eval("#{x}#{char}#{y}")
+        z=nil
+
+        # Eval allows injection here!
+        # $top.push eval("#{x}#{char}#{y}")
+
+           if char=='+'   then z=x+y
+        elsif char=='-'   then z=x-y
+        elsif char=='*'   then z=x*y
+        elsif char=='/'   then z=x/y
+          end
 
       elsif char==';'  && ( ! $settings[:escape] )
         # Exit program
