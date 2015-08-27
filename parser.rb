@@ -6,6 +6,25 @@ class Parser
   $variables = {}
   $top       = []
 
+  def move
+    # Moving to the right
+    $loc[:x] += 1
+
+    # Checking bounds
+    if $loc[:x] >= $data[$loc[:y]].length
+      $loc[:y] += 1
+      $loc[:x] = 0
+    end
+
+    if $loc[:y] == $data.length
+      # We're at the end of the data
+      puts "EOF" if $settings[:debug]
+      return false
+    end
+
+    return true
+  end
+
   def initialize settings, data
     $settings=settings
     $data=data
@@ -14,7 +33,7 @@ class Parser
     $settings[:escape]       = false
     $settings[:assign]       = false
     $settings[:convert]      = false
-    $settings[:debug]        = true
+    # $settings[:debug]        = true
 
     # String settings
     $settings[:is_string]    = false
@@ -25,26 +44,28 @@ class Parser
   end
 
   def run
-    char=nil
-
+    # Parser loop :D
     loop do
 
-
       char=$data[$loc[:y]][$loc[:x]]
-      # puts char
+
+      if char == 0 || ( char == ' ' && ! ( $settings[:escape] || $settings[:is_string] || $settings[:is_number] ) )
+        # Just ignore
+        break if ! move
+        next
+      end
+
+      puts "#{char}" if $settings[:debug]
 
       if ! ( char=~/[0-9a-f]/ )
         $settings[:is_number]=false
       end
 
 
-      # Start parsing
-
-      if char==0
-        # Something went wrong with the file :S
+      ## Parsing ##
 
       ### !!! Most important functions here !!! ###
-      elsif char=='\\' && ( ! $settings[:escape] )
+      if char=='\\' && ( ! $settings[:escape] )
         $settings[:escape]=true
 
       elsif char=='"' && ( ! $settings[:escape] )
@@ -100,12 +121,7 @@ class Parser
               $top.push 0
             end
           else
-            if char.to_i == 0
-              $settings[:base]=16
-            else
-              $settings[:base]=10
-            end
-
+            $settings[:base]=10
             $top.push char.to_i $settings[:base]
           end
         end
@@ -133,7 +149,7 @@ class Parser
         z=nil
 
         # Errors when adding Strings to Fixnums
-        if ! ( x.is_a? Fixnum && y.is_a? Fixnum )
+        if ! ( x.is_a?(Fixnum) && y.is_a?(Fixnum) )
           x=x.to_s
           y=y.to_s
         end
@@ -147,6 +163,8 @@ class Parser
         elsif char=='/'   then z=x/y
           end
 
+      $top.push z
+
       # Exit the program
       elsif char==';'  && ( ! $settings[:escape] )
         # Exit program
@@ -158,22 +176,7 @@ class Parser
       # Outputting settings for debug
       puts "\t#{$variables}\t\t#{$top}\n\t#{$settings}" if($settings[:debug])
 
-      # Moving to the right
-      $loc[:x] += 1
-
-      # Checking bounds
-      if $loc[:x] >= $data[$loc[:y]].length
-        $loc[:y] += 1
-        $loc[:x] = 0
-      end
-
-      if $loc[:y] == $data.length
-        # We're at the end of the data
-        puts "EOF" if $settings[:debug]
-        break
-      end
-
-
+      break if ! move
 
     end # loop do
   end # def run

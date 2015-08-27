@@ -4,8 +4,10 @@ require './parser.rb'
 # Main function
 def main args
 
-  file = nil
-  settings={}
+  $settings = {
+    :file => nil,
+    :debug => false
+  }
 
   i=0
   while i < args.length
@@ -13,20 +15,20 @@ def main args
 
     # File
     if arg == "-f" || arg == "--file"
-      file = args[i+=1]
+      $settings[:file] = args[i+=1]
     elsif arg == "-d" || arg == "--debug"
-      settings['debug']=true
-
+      $settings[:debug]=true
     end
+
     i+=1
   end
 
-  if file == nil
+  if $settings[:file] == nil
     puts "No file specified! Use -f <filename> or --file <filename> !"
     return
   end
 
-  data1D = File.read file
+  data1D = File.read $settings[:file]
   data2D = data1D.split "\n"
   data3D = []
 
@@ -34,10 +36,7 @@ def main args
     data3D[ix] = data.split ''
   end
 
-  parser = Parser.new settings, data3D
-
-  parser.run
-
+  (Parser.new $settings, data3D).run
 
 end
 
