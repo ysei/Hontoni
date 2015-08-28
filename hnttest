@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "11. 1 1+. B11 ~D." > hnttest.hnt
+
+ruby main.rb --debug --file hnttest.hnt > log;
+x=$?;
+[[ $x = 0 ]] && echo "OK" || echo "[$x] Error! See log"
+
+output=$(ruby main.rb --file hnttest.hnt)
+shouldbe=$(echo -e "11\n2\n3")
+
+
+[[ "$output" = "$shouldbe" ]] && echo "OK" || ( echo "Not the expected output:"; echo "'$output'"; echo "'$shouldbe'" )

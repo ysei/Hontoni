@@ -1,0 +1,49 @@
+1
+	{}		[1]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>true, :base=>10}
+1
+	{}		[11]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>true, :base=>10}
+.
+11
+	{}		[11]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>false, :base=>10}
+1
+	{}		[11, 1]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>true, :base=>10}
+ 
+	{}		[11, 1]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>false, :base=>10}
+1
+	{}		[11, 1, 1]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>true, :base=>10}
++
+	{}		[11, 1, 1, 2]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>false, :base=>10}
+.
+2
+	{}		[11, 1, 1, 2]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>false, :base=>10}
+B
+	{}		[11, 1, 1, 2, 0]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>true, :base=>2}
+1
+	{}		[11, 1, 1, 2, 1]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>true, :base=>2}
+1
+	{}		[11, 1, 1, 2, 3]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>true, :base=>2}
+ 
+	{}		[11, 1, 1, 2, 3]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>false, :base=>2}
+~
+	{}		[11, 1, 1, 2, 3]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>true, :is_string=>false, :is_number=>false, :base=>2}
+D
+	{}		[11, 1, 1, 2, 3]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>true, :base=>10}
+.
+3
+	{}		[11, 1, 1, 2, 3]
+	{:file=>"hnttest.hnt", :debug=>true, :escape=>false, :assign=>false, :convert=>false, :is_string=>false, :is_number=>false, :base=>10}
+EOF

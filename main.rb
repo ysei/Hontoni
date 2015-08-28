@@ -36,9 +36,8 @@ def main args
     data3D[ix] = data.split ''
   end
 
-  (Parser.new $settings, data3D).run
-
+  return (Parser.new $settings, data3D).run
 end
 
 # Run main
-main ARGV
+exit main ARGV

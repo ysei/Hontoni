@@ -179,5 +179,9 @@ class Parser
       break if ! move
 
     end # loop do
+
+    # No errors :D
+    return 0
+
   end # def run
 end # class Parser
